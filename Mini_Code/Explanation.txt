@@ -1,0 +1,76 @@
+from pytube import *
+from tkinter.filedialog import *
+from tkinter import *
+from tkinter.messagebox import *
+from threading import *
+import time
+
+
+pytube: A library for accessing and downloading YouTube videos.
+tkinter: Python's standard GUI (Graphical User Interface) toolkit.
+threading: Allows concurrent execution of multiple threads.
+time: Provides functions to work with time-related tasks.
+
+
+------------------------------------------------------------------
+
+def progress(stream=None, chunk=None, file_handle=None, remaining=None):
+    file_downloaded = (file_size - file_handle)
+    per = (file_downloaded / file_size) * 100
+    dBtn.config(text="{:00.0f} % downloaded".format(per))
+
+
+This function is a callback that updates the download progress in the GUI.
+
+--------------------------------------------------------------------
+
+def startDownload():
+    global file_size
+    try:
+        # ... (see below)
+    except Exception as e:
+        print(e)
+        print("error")
+
+This function is called when the user clicks the "Start Download" button.
+It uses the pytube library to download the YouTube video specified by the URL.
+It also sets up the download progress and handles errors.
+
+
+
+--------------------------------------------------------------------
+def startDownloadThread():
+    thread = Thread(target=startDownload)
+    thread.start()
+
+This function creates a new thread to run the startDownload function concurrently.
+It prevents the GUI from freezing during the download.
+
+
+
+--------------------------------------------------------------------
+
+main = Tk()
+main.title("YouTube Downloader")
+main.iconbitmap('utube.ico')
+main.geometry("500x600")
+
+Creates the main window with a title, icon, and dimensions.
+
+
+--------------------------------------------------------------------
+GUI Components:
+
+Entry for entering the YouTube URL (urlField).
+Entry for entering the delay time in seconds (entry_time).
+Button to start the download (dBtn).
+Label to display the video title (vTitle).
+Default Values and GUI Layout:
+
+Inserts a default text into the delay entry (entry_time.insert(0, "Enter delay in seconds")).
+Packs and places the GUI components in the main window.
+
+--------------------------------------------------------------------
+main.mainloop()
+
+Starts the Tkinter event loop, which handles user interactions and updates the GUI.
